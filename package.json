@@ -1,0 +1,29 @@
+{
+  "name": "playwright-bdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "bdd": "cucumber-js --require-module ts-node/register --require ./support/timeouts.ts --require ./support/world.ts --require ./support/hooks.ts --require ./features/steps/**/*.ts ./features/**/*.feature",
+    "bdd:headed": "HEADLESS=false cucumber-js --require-module ts-node/register --require ./features/support/**/*.ts --require ./features/steps/**/*.ts ./features/**/*.feature",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
+    "@faker-js/faker": "^10.1.0",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.0",
+    "dotenv": "^17.2.3",
+    "playwright": "^1.56.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}

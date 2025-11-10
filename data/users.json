@@ -1,0 +1,22 @@
+{
+  "newUser": {
+    "signupName": "Diallo",
+    "email": "testertdf5654dddazd@yopmail.com",
+    "gender": "female",
+    "password": "Blancheporte1@",
+    "newsletter": true,
+    "optin": true,
+    "nom": "Diallo",
+    "prenom": "Taf",
+    "address": "401 East Benton Place",
+    "country": "United States",
+    "state": "Illinois",
+    "city": "Chicago",
+    "zipcode": "60601",
+    "mobile": "+1-312-509-6995"
+  },
+  "existingUser": {
+    "email": "testertdf5654dddazd@yopmail.com",
+    "password": "Blancheporte1@"
+  }
+}
