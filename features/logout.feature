@@ -9,6 +9,6 @@ Feature: Logout user on AutomationExercise
     When I enter correct email and password
     And I click on "Login"
     Then I should be logged in
-    When I click on "Logout"
+    When I logout
     Then I should see "Login to your account" text
     And I close the browser
