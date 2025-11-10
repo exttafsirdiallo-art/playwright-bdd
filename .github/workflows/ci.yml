@@ -40,8 +40,7 @@ jobs:
             --require-module ts-node/register \
             --require ./features/support/**/*.ts \
             --require ./features/steps/**/*.ts \
-            ./features/**/*.feature \
-            --publish-quiet
+            ./features/**/*.feature
 
       # (Optionnel) uploader un rapport Playwright si tu en génères un
       - name: Upload traces/report if present
