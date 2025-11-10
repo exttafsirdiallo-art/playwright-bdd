@@ -53,3 +53,4 @@ jobs:
             test-results/**
             blob-report/**
           if-no-files-found: ignore
+# End of file
