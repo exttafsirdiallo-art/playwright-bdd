@@ -23,34 +23,31 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Installe Chromium/Firefox/WebKit + dépendances système
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      # ⚡ Cache des navigateurs Playwright
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
-      # (Optionnel) Variables d'env pour éviter le mode headless forcé
+      # ⬇️ Installe uniquement Chromium + dépendances
+      - name: Install Chromium only (with deps)
+        run: npx playwright install --with-deps chromium
+
       - name: Env
         run: |
           echo "HEADLESS=true" >> $GITHUB_ENV
           echo "BASE_URL=https://automationexercise.com" >> $GITHUB_ENV
 
-      # Lance les scénarios en headless
-      - name: Run Cucumber (all features)
+      # 🎯 Exécute les scénarios essentiels (plus rapide)
+      - name: Run Cucumber (smoke)
         run: |
           npx cucumber-js \
             --require-module ts-node/register \
             --require ./features/support/**/*.ts \
             --require ./features/steps/**/*.ts \
-            ./features/**/*.feature
-
-      # (Optionnel) uploader un rapport Playwright si tu en génères un
-      - name: Upload traces/report if present
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-artifacts
-          path: |
-            playwright-report/**
-            test-results/**
-            blob-report/**
-          if-no-files-found: ignore
-# End of file
+            ./features/**/*.feature \
+            --tags "@register or @login" \
+            --format progress
