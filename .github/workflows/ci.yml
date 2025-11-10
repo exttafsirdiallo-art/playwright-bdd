@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Installe Chromium/Firefox/WebKit + dépendances système
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # (Optionnel) Variables d'env pour éviter le mode headless forcé
+      - name: Env
+        run: |
+          echo "HEADLESS=true" >> $GITHUB_ENV
+          echo "BASE_URL=https://automationexercise.com" >> $GITHUB_ENV
+
+      # Lance les scénarios en headless
+      - name: Run Cucumber (all features)
+        run: |
+          npx cucumber-js \
+            --require-module ts-node/register \
+            --require ./features/support/**/*.ts \
+            --require ./features/steps/**/*.ts \
+            ./features/**/*.feature \
+            --publish-quiet
+
+      # (Optionnel) uploader un rapport Playwright si tu en génères un
+      - name: Upload traces/report if present
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: |
+            playwright-report/**
+            test-results/**
+            blob-report/**
+          if-no-files-found: ignore

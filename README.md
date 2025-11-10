@@ -1,3 +1,5 @@
+![CI](https://github.com/exttafsirdiallo-art/playwright-bdd/actions/workflows/ci.yml/badge.svg)
+
 Playwright + Cucumber (BDD) – AutomationExercise
 
 Projet E2E basé sur Playwright + Cucumber (TypeScript) pour automatiser les cas de test du site https://automationexercise.com
